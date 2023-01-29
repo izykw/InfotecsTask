@@ -12,19 +12,17 @@
     <div class="container">
         <div class="products">
             <ul class="products_list"></ul>
-            <div class="products_info">
-                <img class="products_image" src="#!" alt="product image">
-            </div>
+            <div class="products_info"></div>
         </div>
         <div>
             <label>
                 Количество выводимых элементов
-                <input type="number" min="0" max="100">
+                <input class="products_count" type="number" min="0" max="100">
             </label>
             <br>
             <label>
                 Сортировать:
-                <select name="sort">
+                <select class="products_sort" name="sort">
                     <option value="title">Заголовок</option>
                     <option value="price">Цена</option>
                     <option value="rating">Рейтинг</option>

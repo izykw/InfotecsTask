@@ -1,7 +1,7 @@
 import { fetchData } from "./api.js";
 
 let listItemsCount = 10;
-let sortBy = 'price';
+let sortBy = 'title';
 let data = [];
 
 function addListItems() {
@@ -12,6 +12,10 @@ function addListItems() {
 			// чтобы при сортировке элементов не делать каждый раз новый запрос.
 			data = products;
 			const list = document.querySelector('.products_list');
+
+			// Очищаем предыдущий список элементов
+			list.innerHTML = '';
+
 			products.forEach(({ id, title }) => {
 				const listItem = document.createElement('li');
 				listItem.classList.add('products_list_item');
@@ -26,7 +30,6 @@ function addListItems() {
 function showListItemInfo() {
 	const list = document.querySelector('.products_list');
 	const productInfoElement = document.querySelector('.products_info');
-	const productImage = document.querySelector('.products_image');
 
 	list.addEventListener('mouseover', (e) => {
 		const target = e.target;
@@ -111,5 +114,32 @@ function getNextElement(cursorPosition, currentElement) {
 		currentElement.nextElementSibling;
 }
 
+function getProducts() {
+	const productsCountInput = document.querySelector('.products_count');
+	productsCountInput.addEventListener('keydown', (e) => {
+		if(e.key !== 'Enter') {
+			return;
+		}
+
+		const productsCount = e.target.value;
+		if(productsCount < 0 || productsCount > 100) {
+			alert('Количество выводимых элементов должно быть в диапазоне от 0 до 100');
+			return;
+		}
+
+		listItemsCount = Number(productsCount);
+		addListItems(listItemsCount);
+	})
+}
+
+function sortProducts() {
+	const sortProductsSelect = document.querySelector('.products_sort');
+	sortProductsSelect.addEventListener('change', (e) => {
+		sortBy = e.target.value;
+	})
+}
+
 addListItems();
 showListItemInfo();
+getProducts();
+sortProducts();
