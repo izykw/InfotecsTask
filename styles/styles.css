@@ -11,20 +11,15 @@
     margin-top: 100px;
 }
 
-.products {
-    position: relative;
-}
-
-.products_info {
+.product_info {
     position: absolute;
     left: 100%;
-    top: 30%;
+    top: -1px; /*Толщина рамки*/
 
-    min-height: 197px;
+    min-height: 200px;
     min-width: 200px;
 
     border: 1px solid #333;
-    border-left: 0;
 
     background-color: #82fdfd;
     text-align: center;
@@ -33,7 +28,7 @@
     transition: opacity 200ms ease-in-out;
 }
 
-.products_image {
+.product_image {
     width: 150px;
     height: 150px;
 }
@@ -51,6 +46,7 @@
 }
 
 .products_list_item {
+    position: relative;
     padding: 15px 20px;
     border-bottom: 1px solid #333;
     transition: background-color 70ms ease-in-out;

@@ -10,22 +10,19 @@
 </head>
 <body>
     <div class="container">
-        <div class="products">
-            <ul class="products_list"></ul>
-            <div class="products_info"></div>
-        </div>
+        <ul class="products_list"></ul>
         <div>
             <label>
-                Количество выводимых элементов
+                Number of output products (0 - 100)
                 <input class="products_count" type="number" min="0" max="100">
+                <button class="set_products_count">OK</button>
             </label>
             <br>
             <label>
-                Сортировать:
+                Sort by:
                 <select class="products_sort" name="sort">
-                    <option value="title">Заголовок</option>
-                    <option value="price">Цена</option>
-                    <option value="rating">Рейтинг</option>
+                    <option value="title">Title</option>
+                    <option value="price">Price</option>
                 </select>
             </label>
         </div>
