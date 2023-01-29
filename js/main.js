@@ -16,11 +16,42 @@ function addListItems() {
 				const listItem = document.createElement('li');
 				listItem.classList.add('products_list_item');
 				listItem.id = id;
-				listItem.innerText = title;
+				listItem.textContent = title;
 				list.appendChild(listItem);
 			})
 			dragAndDrop();
 		});
+}
+
+function showListItemInfo() {
+	const list = document.querySelector('.products_list');
+	const productInfoElement = document.querySelector('.products_info');
+	const productImage = document.querySelector('.products_image');
+
+	list.addEventListener('mouseover', (e) => {
+		const target = e.target;
+		if (target.tagName !== 'li'.toUpperCase()) {
+			return;
+		}
+		const id = Number(target.id);
+		const item = data.find((item) => item.id === id);
+		const { description, price, rating, brand, thumbnail } = item;
+		productInfoElement.innerText = `
+				brand: ${brand}
+				rating: ${rating}
+				price: ${price}
+				description: ${description}
+			`;
+		const productImage = document.createElement('img');
+		productImage.classList.add('products_image');
+		productImage.src = thumbnail;
+		productInfoElement.appendChild(productImage);
+		productInfoElement.classList.add('show');
+	})
+
+	list.addEventListener('mouseout', () => {
+		productInfoElement.classList.remove('show');
+	})
 }
 
 // Не стал использовать события mousedown, mousemove and mouseup,
@@ -81,3 +112,4 @@ function getNextElement(cursorPosition, currentElement) {
 }
 
 addListItems();
+showListItemInfo();

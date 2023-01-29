@@ -33,6 +33,15 @@
     transition: opacity 200ms ease-in-out;
 }
 
+.products_image {
+    width: 150px;
+    height: 150px;
+}
+
+.show {
+    opacity: 1;
+}
+
 .products_list {
     border: 1px solid #333;
     min-width: 200px;
