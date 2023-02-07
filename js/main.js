@@ -4,6 +4,7 @@ const productsList = document.querySelector('.products_list');
 const productsCountElement = document.querySelector('.products_count');
 const productsCountButton = document.querySelector('.set_products_count');
 const productsSortElement = document.querySelector('.products_sort');
+
 const productInfo = document.createElement('div');
 productInfo.classList.add('product_info');
 const productImage = document.createElement('img');
@@ -30,25 +31,34 @@ productsCountElement.addEventListener('keydown', (e) => {
 	}
 
 	const count = Number(e.target.value);
-	setProductsCount(count);
-	addProductsToList();
+	if(isProductsCountUpdate(count)) {
+		return;
+	}
+
+ 	setProductsCount(count);
+	fetchProducts();
 })
 productsCountButton.addEventListener('click', () => {
 	const count = Number(productsCountElement.value);
+	if(isProductsCountUpdate(count)) {
+		return;
+	}
+
 	setProductsCount(count);
-	addProductsToList();
+	fetchProducts();
 })
 productsSortElement.addEventListener('change', (e) => {
 	sortProducts(e);
 	updateProductsList();
 })
 
-function addProductsToList() {
+function fetchProducts() {
 	fetchData(productsCount).then(data => {
 		// Сохраняем полученные продукты,
 		// чтобы при сортировке элементов не делать каждый раз новый запрос.
 		products = data.products;
 		updateProductsList();
+		setListItemsDraggable();
 	})
 }
 
@@ -61,7 +71,7 @@ function updateProductsList() {
 		listItem.classList.add('products_list_item');
 		listItem.id = id;
 		listItem.textContent = title;
-		productsList.appendChild(listItem)
+		productsList.append(listItem)
 	});
 }
 
@@ -82,9 +92,9 @@ function showProductInfo(e) {
 				description: ${description}
 			`;
 	productImage.src = thumbnail;
-	productInfo.appendChild(productImage);
+	productInfo.append(productImage);
 	productInfo.classList.add('show');
-	target.appendChild(productInfo);
+	target.append(productInfo);
 
 
 	const image = document.createElement('img');
@@ -98,12 +108,8 @@ function hideProductInfo() {
 	productInfo.classList.remove('show');
 }
 
-// Не стал использовать события mousedown, mousemove and mouseup,
-// так как посчитал, что встроенного api достаточно для данной задачи.
 function dragAndDrop(e) {
 	e.preventDefault();
-
-	setListItemsDraggable();
 
 	const activeElement = productsList.querySelector('.selected');
 	const currentElement = e.target;
@@ -137,11 +143,10 @@ function setListItemsDraggable() {
 	})
 }
 
-export function getNextElement(cursorPosition, currentElement) {
+function getNextElement(cursorPosition, currentElement) {
 	const currentElementCoordinates = currentElement.getBoundingClientRect();
 	const currentElementCenter = currentElementCoordinates.y +
 		currentElementCoordinates.height / 2;
-
 
 	return (cursorPosition < currentElementCenter) ?
 		currentElement :
@@ -186,4 +191,8 @@ function sortProducts(e) {
 	}
 }
 
-addProductsToList();
+function isProductsCountUpdate(count) {
+	return count === productsCount
+}
+
+fetchProducts();
